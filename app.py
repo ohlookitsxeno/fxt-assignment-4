@@ -8,14 +8,21 @@ import nltk
 from nltk.corpus import stopwords
 from sklearn.datasets import fetch_20newsgroups
 
-newsgroups = fetch_20newsgroups(subset='all')
 
 nltk.download('stopwords')
 
 app = Flask(__name__)
 
+newsgroups = fetch_20newsgroups(subset='all')
 
-# TODO: Fetch dataset, initialize vectorizer and LSA here
+vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'), max_features=1000,ngram_range=(1, 2),min_df=4,max_df=0.8)
+
+term_doc_mat = vectorizer.fit_transform(newsgroups.data)
+
+svd = TruncatedSVD(n_components=100) 
+
+svd_marix = svd.fit_transform(term_doc_mat)
+
 
 
 def search_engine(query):
@@ -24,8 +31,19 @@ def search_engine(query):
     Input: query (str)
     Output: documents (list), similarities (list), indices (list)
     """
-    # TODO: Implement search engine here
-    # return documents, similarities, indices 
+    print("meow", query)
+    tf = vectorizer.transform([query])
+    cosine_sim_tfidf = cosine_similarity(tf, term_doc_mat)
+
+    similarity_scores_lsa = cosine_sim_tfidf[0]
+
+    results_lsa = [(index, similarity_scores_lsa[index], newsgroups.data[index]) 
+               for index in np.argsort(similarity_scores_lsa)[::-1]]
+    
+    indices, similarities, documents = zip(*results_lsa[:5])
+    indices = [int(idx) for idx in indices]
+    similarities = [float(sim) for sim in similarities]
+    return list(documents), list(similarities), list(indices)
 
 @app.route('/')
 def index():

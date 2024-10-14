@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LSA Search Engine</title>
-    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6 text-center">Latent Semantic Analysis (LSA) Search Engine</h1>
     
         <div class="flex flex-col md:flex-row justify-center items-center mb-6">
-            <input id="num_points" type="text" class="border border-gray-300 rounded-md px-4 py-2 md:mr-4">
-            <button id="gen-data" class="bg-[#ED5443] text-white font-bold py-2 px-6 rounded-md hover:bg-[#A02E21]">
-                Search
-            </button>
+            <form id="search-form">
+                <input type="text" id="query" placeholder="Enter search query" required>
+                <button type="submit">Search</button>
+            </form>
         </div>
+        
+    
+        <div id="results"></div>
+        <canvas id="similarity-chart"></canvas>
+
     <script src="static/script.js"></script>
 </body>
