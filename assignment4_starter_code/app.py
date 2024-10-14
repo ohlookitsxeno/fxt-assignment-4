@@ -6,9 +6,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import nltk
 from nltk.corpus import stopwords
-from sklearn.datasets import fetch_20newsgroups
-
-newsgroups = fetch_20newsgroups(subset='all')
 
 nltk.download('stopwords')
 
@@ -38,4 +35,4 @@ def search():
     return jsonify({'documents': documents, 'similarities': similarities, 'indices': indices}) 
 
 if __name__ == '__main__':
-    app.run(port=3000, debug=True)
+    app.run(debug=True)

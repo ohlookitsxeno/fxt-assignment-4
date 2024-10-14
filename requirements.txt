@@ -1,6 +1,7 @@
-flask
 numpy
 plotly
 pandas
 matplotlib
+Flask
 scikit-learn
+nltk
